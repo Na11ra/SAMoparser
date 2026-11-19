@@ -93,7 +93,10 @@ def catalog_view(row: SoftwareProduct) -> dict[str, Any]:
 
 
 def installation_view(row: InstallationRow) -> dict[str, Any]:
-    return {"computer_id": row.computer_id, "name": row.raw_name, "publisher": row.publisher, "version": row.version, "canonical_name": row.canonical_name, "match_status": row.match_status, "match_score": row.match_score}
+    # `id` нужен web-клиенту для DELETE /api/v1/installations/{id}; `observed_at`
+    # отображает время регистрации факта в интерфейсе. Поля аддитивные: контракт
+    # списка установок расширяется без изменения существующих ключей.
+    return {"id": row.id, "computer_id": row.computer_id, "name": row.raw_name, "publisher": row.publisher, "version": row.version, "canonical_name": row.canonical_name, "match_status": row.match_status, "match_score": row.match_score, "observed_at": row.observed_at}
 
 
 def match_installation(item: Installation, products: list[SoftwareProduct]) -> dict[str, Any]:

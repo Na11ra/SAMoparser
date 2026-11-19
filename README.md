@@ -17,7 +17,7 @@ flowchart LR
 ```
 
 - `services/backend` — общий Python-образ и минимальные entrypoints `app.api`, `app.ingest`, `app.worker`.
-- `services/web` — React/Vite placeholder и nginx reverse proxy.
+- `services/web` — SPA на React 19 / Vite 6 / react-router-dom / lucide-react: дашборд, комплаенс-контроль, справочники, импорт, очередь проверки имён и офлайн ИИ-сервисы поверх публичного API; nginx reverse proxy. Подробности и запуск: [`services/web/README.md`](services/web/README.md).
 - `services/agent` — пример отправителя, который команда заменит полноценным Windows/Linux collector.
 - `deploy/helm/sam` — umbrella-чарт с отдельными Deployment для API, ingest, worker и web.
 - В Kubernetes по умолчанию PostgreSQL и Redis остаются внешними. Для hackathon-профиля `values-hackathon.yaml` включает одноэкземплярные встроенные PostgreSQL (`pgvector/pgvector:pg16`) и Redis (`redis:7.2`) с PVC; это удобство для single-node стенда, а не HA или production-ready база данных.
