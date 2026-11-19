@@ -1,41 +1,40 @@
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
-import { Box } from 'lucide-react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { AppDataProvider } from './app/AppDataContext';
+import { ToastProvider } from './components/ui';
+import Layout from './components/Layout';
 import Overview from './pages/Overview';
+import Compliance from './pages/Compliance';
+import Risks from './pages/Risks';
 import Catalog from './pages/Catalog';
 import Licenses from './pages/Licenses';
+import Devices from './pages/Devices';
 import Installations from './pages/Installations';
-import AIChat from './components/AIChat';
+import Import from './pages/Import';
+import Matching from './pages/Matching';
+import AILab from './pages/AILab';
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
-      <div className="app-container">
-        <header className="header">
-          <div className="logo">
-            <Box size={24} />
-            SAMoparser
-          </div>
-          <nav className="nav-tabs">
-            <NavLink to="/" className={({ isActive }) => `nav-tab ${isActive ? 'active' : ''}`} end>Обзор</NavLink>
-            <NavLink to="/catalog" className={({ isActive }) => `nav-tab ${isActive ? 'active' : ''}`}>Каталог ПО</NavLink>
-            <NavLink to="/licenses" className={({ isActive }) => `nav-tab ${isActive ? 'active' : ''}`}>Лицензии</NavLink>
-            <NavLink to="/installations" className={({ isActive }) => `nav-tab ${isActive ? 'active' : ''}`}>Установки</NavLink>
-          </nav>
-        </header>
-
-        <main className="main-content">
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <ToastProvider>
+        <AppDataProvider>
           <Routes>
-            <Route path="/" element={<Overview />} />
-            <Route path="/catalog" element={<Catalog />} />
-            <Route path="/licenses" element={<Licenses />} />
-            <Route path="/installations" element={<Installations />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={<Overview />} />
+              <Route path="/compliance" element={<Compliance />} />
+              <Route path="/risks" element={<Risks />} />
+              <Route path="/catalog" element={<Catalog />} />
+              <Route path="/licenses" element={<Licenses />} />
+              <Route path="/devices" element={<Devices />} />
+              <Route path="/installations" element={<Installations />} />
+              <Route path="/import" element={<Import />} />
+              <Route path="/matching" element={<Matching />} />
+              <Route path="/ai-lab" element={<AILab />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Route>
           </Routes>
-        </main>
-      </div>
-
-      <AIChat />
+        </AppDataProvider>
+      </ToastProvider>
     </BrowserRouter>
   );
 }
-
-export default App;
